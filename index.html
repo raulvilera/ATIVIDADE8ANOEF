@@ -56,6 +56,8 @@
         .info-group {
             display: flex;
             align-items: center;
+            justify-content: center;
+            flex: 1;
         }
         
         .info-label {
@@ -70,6 +72,13 @@
             border-radius: 4px;
             background-color: #f8fbff;
             box-shadow: inset 2px 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            min-width: 80px;
+        }
+        
+        .name-group {
+            flex: 2;
+            justify-content: flex-start;
         }
         
         .activity-title {
@@ -132,9 +141,10 @@
         }
         
         .option.selected {
-            background: linear-gradient(145deg, #d4edda, #c3e6cb);
-            border-color: #28a745;
-            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.1),
+            background: linear-gradient(145deg, #155724, #0f4019);
+            border-color: #0f4019;
+            color: white;
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.3),
                         4px 4px 8px rgba(0,0,0,0.1);
         }
         
@@ -242,7 +252,7 @@
         <div class="header">
             <div class="school-name">E.E. PROFª WANDA MASCAGNI DE SÁ</div>
             <div class="student-info">
-                <div class="info-group">
+                <div class="info-group name-group">
                     <span class="info-label">NOME:</span>
                     <select id="studentName" class="info-field">
                         <option value="">Selecione seu nome</option>
