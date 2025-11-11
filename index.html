@@ -20,11 +20,12 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
         }
         
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             padding: 20px;
             background: linear-gradient(145deg, #e6f2ff, #cce5ff);
             border-radius: 12px;
@@ -82,7 +83,7 @@
         
         .question-container {
             padding: 25px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             background: linear-gradient(145deg, #e6f2ff, #cce5ff);
             border-radius: 12px;
             box-shadow: 8px 8px 16px #b3b3b3, 
@@ -137,10 +138,19 @@
                         4px 4px 8px rgba(0,0,0,0.1);
         }
         
+        /* Letras das alternativas em negrito */
+        .option::before {
+            content: attr(data-letter);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
         .buttons {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
+            position: relative;
+            z-index: 2;
         }
         
         button {
@@ -153,8 +163,6 @@
             transition: all 0.3s ease;
             box-shadow: 6px 6px 12px rgba(0,0,0,0.2),
                        -6px -6px 12px rgba(255,255,255,0.7);
-            position: relative;
-            z-index: 2;
         }
         
         #submitBtn {
@@ -213,34 +221,19 @@
             color: #721c24;
         }
         
-        /* Efeito de fundo cinza entre os elementos */
+        /* Efeito de fundo cinza entre os elementos - corrigido */
         .container::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
             background-color: #d0d0d0;
             z-index: 1;
-            border-radius: 15px;
+            border-radius: 20px;
             box-shadow: inset 5px 5px 10px #b3b3b3, 
                        inset -5px -5px 10px #ededed;
-        }
-        
-        /* Ajuste para garantir que o conteúdo fique acima do fundo */
-        .header, .question-container, .buttons, .result {
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* Espaçamento entre elementos */
-        .header {
-            margin-bottom: 30px;
-        }
-        
-        .question-container {
-            margin-bottom: 30px;
         }
     </style>
 </head>
@@ -508,15 +501,22 @@
             questions.forEach(q => {
                 const questionDiv = document.createElement('div');
                 questionDiv.className = 'question-container';
+                
+                let optionsHTML = '';
+                q.options.forEach((option, index) => {
+                    const letter = String.fromCharCode(65 + index);
+                    optionsHTML += `
+                        <div class="option" data-question="${q.id}" data-option="${index}" data-letter="${letter})">
+                            ${option.text}
+                        </div>
+                    `;
+                });
+                
                 questionDiv.innerHTML = `
                     <div class="question">${q.id}. ${q.question}</div>
                     <img src="${q.image}" alt="Imagem da questão ${q.id}" class="question-image">
                     <div class="options">
-                        ${q.options.map((option, index) => `
-                            <div class="option" data-question="${q.id}" data-option="${index}">
-                                ${String.fromCharCode(65 + index)}) ${option.text}
-                            </div>
-                        `).join('')}
+                        ${optionsHTML}
                     </div>
                 `;
                 questionsContainer.appendChild(questionDiv);
@@ -631,13 +631,4 @@
         }
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
